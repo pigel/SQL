@@ -1,9 +1,12 @@
 import sqlite3
+import os.path
+
 class Base():
-    base = input("base name? ")
-    table_name = input("table name? ")
+    base = 'baza'
+    table_name = 'tabl'
     con = sqlite3.connect(base)
     cur = con.cursor()
+
 def createDB():
     try:
         Base.cur.execute(f"""CREATE TABLE IF NOT EXISTS {Base.table_name} (
@@ -16,5 +19,18 @@ def createDB():
         print("Ошибка при работе с SQLite", error)
     finally:
         if Base.con:
-            Base.con.close()
             print("создана база\n" + Base.base, 'с таблицей ' + Base.table_name)
+def insertInto():
+    try:
+        Base.cur.execute(f"""INSERT INTO {Base.table_name} VALUES('Маша', 'Иванова', '32', '1500')""")
+        Base.cur.execute(f"""SELECT * FROM {Base.table_name}""")
+        Base.con.commit()
+        rows = Base.cur.fetchall()
+        print(rows)
+    except sqlite3.Error as error:
+        print("Ошибка при работе с SQLite", error)
+    finally:
+        Base.con.close()
+
+createDB()
+insertInto()
