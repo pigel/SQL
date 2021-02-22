@@ -1,0 +1,19 @@
+import sqlite3
+def createDB():
+    base = input("base name? ")
+    table_name = input("table name? ")
+    try:
+        con = sqlite3.connect(base)
+        cur = con.cursor()
+        cur.execute(f"""CREATE TABLE IF NOT EXISTS {table_name} (
+    name TEXT,
+    sex INTEGER,
+    old INTEGER,
+    score INTEGER
+)""")
+    except sqlite3.Error as error:
+        print("Ошибка при работе с SQLite", error)
+    finally:
+        if con:
+            con.close()
+            print("Соединение с SQLite закрыто\n", 'создана таблица ' + table_name)
