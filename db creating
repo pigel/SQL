@@ -1,24 +1,31 @@
 import sqlite3
+from datetime import date
 base = 'baza'
 table_name = 'tabl'
 con = sqlite3.connect(base)
 cur = con.cursor()
+
+
 def createDB():
     try:
-        cur.execute(f"""CREATE TABLE IF NOT EXISTS {table_name} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, surname TEXT, address INTEGER, phone INTEGER)""")
+        cur.execute(
+            f"""CREATE TABLE IF NOT EXISTS {table_name} (id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT, name TEXT, surname TEXT, address INTEGER, phone INTEGER)""")
     except sqlite3.Error as error:
         print("Ошибка при работе с SQLite", error)
+
+
 def insertInto():
+    today = date.today()
     name = input('имя? ')
     surname = input('фамилия? ')
     add = input('адрес? ')
     phone = input('номер телефона? ')
     try:
         cur.execute(
-            f"""INSERT INTO {table_name} (name, surname, address, phone) VALUES('{name}', '{surname}', '{add}', '{phone}')""")
+            f"""INSERT INTO {table_name} (date, name, surname, address, phone) VALUES('{today}', '{name}', '{surname}', '{add}', '{phone}')""")
         cur.execute(f"""SELECT * FROM {table_name}""")
         rec = input('записать? д/н ')
-        if rec != 'д'and rec != 'н':
+        if rec != 'д' and rec != 'н':
             print('вы ввели неверное значение, повторите ввод')
             insertInto()
         else:
@@ -38,5 +45,9 @@ def insertInto():
         print("Ошибка при работе с SQLite", error)
     finally:
         con.close()
+
+
 createDB()
 insertInto()
+
+
