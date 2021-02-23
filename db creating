@@ -5,20 +5,31 @@ con = sqlite3.connect(base)
 cur = con.cursor()
 def createDB():
     try:
-        cur.execute(f"""CREATE TABLE IF NOT EXISTS {table_name} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, surname TEXT, age INTEGER, phone INTEGER)""")
+        cur.execute(f"""CREATE TABLE IF NOT EXISTS {table_name} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, surname TEXT, address INTEGER, phone INTEGER)""")
     except sqlite3.Error as error:
         print("Ошибка при работе с SQLite", error)
 def insertInto():
-    name = input('имя?')
-    surname = input('фамилия?')
-    age = input('возраст?')
-    phone = input('номер телефона?')
+    name = input('имя? ')
+    surname = input('фамилия? ')
+    add = input('адрес? ')
+    phone = input('номер телефона? ')
     try:
-        cur.execute(f"""INSERT INTO {table_name} (name, surname, age, phone) VALUES('{name}', '{surname}', '{age}', '{phone}')""")
+        cur.execute(
+            f"""INSERT INTO {table_name} (name, surname, address, phone) VALUES('{name}', '{surname}', '{add}', '{phone}')""")
         cur.execute(f"""SELECT * FROM {table_name}""")
-        con.commit()
-        rows = cur.fetchall()
-        print(rows)
+        rec = input('записать? д/н ')
+        if rec != 'д'and rec != 'н':
+            print('вы ввели неверное значение, повторите ввод')
+            insertInto()
+        else:
+            if rec == 'д':
+                con.commit()
+                rows = cur.fetchall()
+                print(rows)
+                insertInto()
+            else:
+                rec == 'н'
+                exit()
     except sqlite3.Error as error:
         print("Ошибка при работе с SQLite", error)
     finally:
