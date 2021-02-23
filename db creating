@@ -26,10 +26,14 @@ def insertInto():
                 con.commit()
                 rows = cur.fetchall()
                 print(rows)
-                insertInto()
-            else:
-                rec == 'н'
-                exit()
+                ex = input('создать новую запись ? д/н ')
+                if ex != 'д' and ex != 'н':
+                    print('вы ввели неверное значение, повторите ввод')
+                else:
+                    if ex == 'д':
+                        insertInto()
+                    else:
+                        exit()
     except sqlite3.Error as error:
         print("Ошибка при работе с SQLite", error)
     finally:
