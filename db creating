@@ -8,9 +8,6 @@ def createDB():
         cur.execute(f"""CREATE TABLE IF NOT EXISTS {table_name} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, surname TEXT, age INTEGER, phone INTEGER)""")
     except sqlite3.Error as error:
         print("Ошибка при работе с SQLite", error)
-    finally:
-        if con:
-            print("создана база\n" + base, 'с таблицей ' + table_name)
 def insertInto():
     name = input('имя?')
     surname = input('фамилия?')
