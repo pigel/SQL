@@ -1,5 +1,7 @@
 import sqlite3
 from datetime import date
+print("Copyright (c) 2016 - %d | Dmitrii Voronchikhin " % date.today().year)
+
 base = 'baza'
 table_name = 'tabl'
 con = sqlite3.connect(base)
