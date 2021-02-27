@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import date
+print('Программа для создания БД и добавления записей в таблицу')
 print("Copyright (c) 2016 - %d | Dmitrii Voronchikhin " % date.today().year)
 
 base = 'baza'
